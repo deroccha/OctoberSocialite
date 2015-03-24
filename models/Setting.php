@@ -28,8 +28,10 @@ class Setting extends Model
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['*'];
+    protected $guarded = ['config_data'];
 
+
+    protected $jsonable = ['config_data'];
     /**
      * @var array Fillable fields
      */
@@ -49,8 +51,15 @@ class Setting extends Model
     public $attachMany = [];
 
 
-    public function beforeFetch()
+
+    public function afterFetch()
     {
-        dd('asdasd');
+
+    }
+
+
+    public function beforeValidate()
+    {
+
     }
 }

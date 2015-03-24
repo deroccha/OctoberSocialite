@@ -1,25 +1,30 @@
 <?php namespace Kakuki\OAuth2\Components;
 
-use Auth;
-use Laravel\Socialite\Facades\Socialite;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Request;
-use Illuminate\Routing\Controller;
+use Session;
 use Cms\Classes\ComponentBase;
-use Kakuki\OAuth2\Models\Settings;
-use RainLab\User\Components\Session;
-use RainLab\User\Models\User;
-use Cms\Classes\Page;
+use Auth;
+use Request;
+use Kakuki\OAuth2\Models\Setting;
+//use RainLab\User\Components\Session as RainLabSession;
+//use RainLab\User\Models\User;
+use Socialite;
 use Redirect;
-use App;
+//use Kakuki\OAuth2\Classes\ProviderSession;
 
 
 class SocialLogin extends ComponentBase {
 
+    public    $request;
 
-    protected $request;
+    public    $provider;
 
-    public $provider;
+    public    $callback_url;
+
+    public    $socialite_session;
+
+    public    $socialite_providers;
+
+    //private   $socialite;
 
 
 	public function componentDetails() {
@@ -33,106 +38,99 @@ class SocialLogin extends ComponentBase {
 		return [];
 	}
 
-	public function onRun() {
+    public function init()
+    {
 
-		$this->addCss('assets/css/custom.css');
+        $this->setSessionProvider();
+    }
 
-        $redirectUrl = $this->pageUrl($this->property('redirect'));
 
+	public function onRun()
+    {
 
-        dd($this->property('redirect'));
-        if($this->user())
-            if ($redirectUrl = post('redirect', $redirectUrl)) {
-                return Redirect::intended($redirectUrl);
-            }
+        $this->addCss('assets/css/custom.css');
+        $this->socialite_providers = $this->page['socialite_providers'] =$this->providersList();
 
         //check for provider param in url
         if($provider = $this->param('provider')){
 
+            $this->callback_url = preg_replace('~.*\K:(.*)~s','',Request::root().$this->page->url);
+            $this->request = $this->createRequest($provider);
+            $this->setSession();
+            return $this->request->redirect();
 
-            $this->providerSession($provider);
-
-            $request = $this->createRequest($provider);
-
-            return $request->redirect();
         }
 
-        //Log in user if Request has code
+        //Authorize user if Request has code
         if(Request::has('code')){
 
-            $this->provider = Session::get('provider');
+            var_dump(Session::all());
+            if(!$this->getSession())
+                return;
 
-            $this->crawlUser();
-            /*
-            * Redirect to the intended page after successful sign in
-            */
-
-            $user = User::where( 'email', $fb_user->getProperty( 'email' ) )->first();
-            if (!$user) {
-                $password = uniqid();
-                $user = Auth::register([
-                    'name' => $fb_user->getProperty('first_name'),
-                    'surname' => $fb_user->getProperty('last_name'),
-                    'email' => $fb_user->getProperty('email'),
-                    'username' => $fb_user->getProperty('email'),
-                    'password' => $password,
-                    'password_confirmation' => $password
-                ], true);
-            }
-
-
-            Auth::login($user, true);
-
-            if ($redirectUrl = post('redirect', $redirectUrl)) {
-                return Redirect::intended($redirectUrl);
-            }
+            dd($this->getSession()->user() );
 
         }
 
 	}
 
-
-	public function crawlUser() {
-
-        $user = $this->createRequest($this->provider)->user();
-
-        dd($user);
-        Auth::login($user, true);
-
-        return $user;
-
-	}
-
-
-    public function createRequest($provider){
-
+    public function createRequest($provider)
+    {
         $instance = Socialite::driver($provider);
-        return $this->injectCredentials($instance, $provider);
+        $init = $this->injectCredentials($instance, $provider);
+
+        return $init;
     }
 
-    public function providerSession($provider){
 
-        if(Session::has('provider'))
-            Session::forget('provider');
+    public function setSession()
+    {
+        if(Session::has('socialite_object'))
+            Session::forget('socialite_object');
 
-        return Session::put('provider', $provider );
+        Session::put('socialite_object', $this->request );
+
+        return;
+
     }
+
+
+    public function setSessionProvider()
+    {
+        if($provider = $this->param('provider')){
+
+            if(Session::has('provider'))
+                Session::forget('provider');
+
+            var_dump( Session::get('provider'));
+            return  Session::put('provider', $this->provider );
+
+        }
+
+        return;
+
+    }
+
+
+    public function getSession()
+    {
+        return Session::get('socialite_object');
+    }
+
 
 
     public function injectCredentials($instance, $provider){
-
+        $credential = $this->providerData($provider)->toArray();
         $instance = new $instance
         (
             Request::instance(),
-            Settings::get('client_id_' . $provider),
-            Settings::get('client_secret_' . $provider),
-            Settings::get('callback_url')
+            $credential['client_id'],
+            $credential['client_secret'],
+            $this->callback_url
         );
 
         return $instance;
-
     }
-
 
     /**
      * Returns the logged in user, if available
@@ -145,4 +143,14 @@ class SocialLogin extends ComponentBase {
         return Auth::getUser();
     }
 
+
+    public function providersList()
+    {
+        return Setting::lists('provider');
+    }
+
+    public function providerData($provider)
+    {
+        return Setting::where('provider', $provider)->first();
+    }
 }

@@ -1,13 +1,6 @@
 <ul id="socialize">
-    <li><a href="/login/github"><i class="fa fa-github"></i> GitHub</a>
+    {% for provider in socialite_providers %}
+    <li><a href="{{ this.page.url }}/{{ provider |lower }}"><i class="fa fa-{{ provider |lower }}"></i> {{ provider }}</a>
     </li>
-
-    <li><a href="/login/facebook"><i class="fa fa-facebook"></i> Facebook</a>
-    </li>
-
-    <li><a href="#"
-           data-request="onSocializeLogin"
-           data-request-data="provider: 'twitter'"
-            ><i class="fa fa-twitter"></i> Facebook</a>
-    </li>
+    {% endfor %}
 </ul>

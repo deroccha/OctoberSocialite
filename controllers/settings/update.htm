@@ -9,12 +9,12 @@
 
     <?= Form::open(['class' => 'layout']) ?>
 
-<input type="hidden" name="Setting[provider]" value="<?= $this->providerAlias ?>" />
+<input type="hidden" name="Setting[provider]" value="<?= $this->formGetModel()->provider ?>" />
 
 <div class="scoreboard">
     <div data-control="toolbar">
         <div class="scoreboard-item title-value">
-            <p class="oc-icon-<?= strtolower($this->providerAlias) ?>"><?= $this->provider ?></p>
+            <p class="oc-icon-<?= strtolower($this->formGetModel()->provider) ?>"><?= $this->formGetModel()->provider ?></p>
         </div>
     </div>
 </div>

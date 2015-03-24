@@ -3,6 +3,7 @@
 use Cms\Classes\Partial;
 use System\Classes\PluginManager;
 use Kakuki\OAuth2\Models\Setting;
+use October\Rain\Parse\Markdown;
 
 class ProviderManager {
 
@@ -12,6 +13,9 @@ class ProviderManager {
      * @var array List of registered providers.
      */
     private $providers;
+
+
+    public $readme;
 
 
     /**
@@ -41,7 +45,7 @@ class ProviderManager {
     }
 
     /**
-     * Loads the hardcoded available Providers across Socialite
+     * Load the hardcoded available Providers across Socialite
      * @return void
      */
     protected function loadProviders()
@@ -75,6 +79,14 @@ class ProviderManager {
     public function registeredProviders(){
 
         return Setting::lists('provider');
+    }
+
+    public static function readme(){
+
+        $readme_file = file_get_contents(plugins_path().'/kakuki/oauth2/README.md');
+        $parser = new Markdown;
+
+        return $parser->parse($readme_file);
     }
 
 }

@@ -5,6 +5,7 @@ use Kakuki\OAuth2\Classes\ProviderManager;
 use System\Classes\SettingsManager;
 use Backend\Classes\Controller;
 use Kakuki\OAuth2\Models\Setting;
+use Parsedown;
 use Flash;
 use Lang;
 use Exception;
@@ -22,8 +23,8 @@ class Settings extends Controller
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
 
-    public $providerAlias;
 
+    public $providerAlias;
     protected $providerClass;
 
     public function __construct()
@@ -71,6 +72,7 @@ class Settings extends Controller
 
     public function create($providerAlias)
     {
+        ProviderManager::readme();
         try {
             $this->providerAlias = $providerAlias;
             $this->asExtension('FormController')->create();
@@ -79,4 +81,6 @@ class Settings extends Controller
             $this->handleError($ex);
         }
     }
+
+
 }

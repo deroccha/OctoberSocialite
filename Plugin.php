@@ -38,13 +38,6 @@ class Plugin extends PluginBase {
 		];
 	}
 
-
-	public function boot() {
-        $alias = AliasLoader::getInstance();
-        $alias->alias('SocialiteFactory', App::make('Laravel\Socialite\Contracts\Factory'));
-
-	}
-
     /**
      * Register service provider and alias facade.
      */
@@ -59,23 +52,14 @@ class Plugin extends PluginBase {
 
 	public function registerSettings() {
 		return [
-			'api_credentials' => [
-				'label' => 'OAuth2 Credentials',
-				'description' => 'Manage OAuth2 API credentials for Socialite Login',
-				'category' => 'Socialite',
-				'icon' => 'icon-cog',
-				'class' => 'Kakuki\OAuth2\Models\Settings',
-				'order' => 500,
-				'keywords' => 'social log in with facebook, twitter, google, or github',
-			],
             'providers' => [
-                'label' => 'Add Provider',
-                'description' => 'Setup a provider to be accessable across component',
-                'category' => 'Socialite',
+                'label' => 'Manage OAuth Providers',
+                'description' => 'Setup provider to be available across component',
+                'category'    => 'Socialite',
                 'url'         => Backend::url('kakuki/oauth2/settings'),
-                'icon' => 'icon-globe',
-                'order' => 400,
-                'keywords' => 'social log in with facebook, twitter, google, or github',
+                'icon'        => 'icon-globe',
+                'order'       => 400,
+                'keywords'    => 'social log in with facebook, twitter, google, or github ...',
             ],
 		];
 	}

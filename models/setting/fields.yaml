@@ -16,7 +16,7 @@ tabs:
          tab: Credentials
 
       help:
-         label: Help
-         disabled: false
+         type: partial
+         path: ~/plugins/kakuki/oauth2/models/setting/_help_field.htm
          tab: Help
 

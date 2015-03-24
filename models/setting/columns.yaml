@@ -6,3 +6,9 @@ columns:
     provider:
         label: Provider Name
         searchable: true
+
+    created_at:
+        label: Created at
+
+    updated_at:
+        label: Updated at
