@@ -9,6 +9,7 @@ use Kakuki\OAuth2\Models\Setting;
 //use RainLab\User\Models\User;
 use Socialite;
 use Redirect;
+
 //use Kakuki\OAuth2\Classes\ProviderSession;
 
 
@@ -24,6 +25,11 @@ class SocialLogin extends ComponentBase {
 
     public    $socialite_providers;
 
+    private   $client_secret;
+
+    private   $client_id;
+
+
     //private   $socialite;
 
 
@@ -38,12 +44,6 @@ class SocialLogin extends ComponentBase {
 		return [];
 	}
 
-    public function init()
-    {
-
-        $this->setSessionProvider();
-    }
-
 
 	public function onRun()
     {
@@ -54,9 +54,12 @@ class SocialLogin extends ComponentBase {
         //check for provider param in url
         if($provider = $this->param('provider')){
 
+            $this->provider = $provider;
             $this->callback_url = preg_replace('~.*\K:(.*)~s','',Request::root().$this->page->url);
+            $this->providerData($provider);
+            $this->setSessionProvider();
             $this->request = $this->createRequest($provider);
-            $this->setSession();
+
             return $this->request->redirect();
 
         }
@@ -64,11 +67,19 @@ class SocialLogin extends ComponentBase {
         //Authorize user if Request has code
         if(Request::has('code')){
 
-            var_dump(Session::all());
             if(!$this->getSession())
                 return;
 
-            dd($this->getSession()->user() );
+            $credentials = $this->getSession();
+            $this->provider = $credentials['provider'];
+            $this->client_id = $credentials['client_id'];
+            $this->callback_url = $credentials['callback_url'];
+            $this->client_secret = $credentials['client_secret'];
+
+            $this->request = $this->createRequest($this->provider);
+
+            dd($this->request->user());
+        //reuse save session
 
         }
 
@@ -77,55 +88,40 @@ class SocialLogin extends ComponentBase {
     public function createRequest($provider)
     {
         $instance = Socialite::driver($provider);
-        $init = $this->injectCredentials($instance, $provider);
+        $init = $this->injectCredentials($instance);
 
         return $init;
     }
 
-
-    public function setSession()
-    {
-        if(Session::has('socialite_object'))
-            Session::forget('socialite_object');
-
-        Session::put('socialite_object', $this->request );
-
-        return;
-
-    }
-
-
     public function setSessionProvider()
     {
-        if($provider = $this->param('provider')){
+        if(Session::has('oauth'))
+            Session::forget('oauth');
 
-            if(Session::has('provider'))
-                Session::forget('provider');
+        $data = array(
+            'provider' =>$this->provider,
+            'callback_url'=> $this->callback_url,
+            'client_id' =>$this->client_id,
+            'client_secret'=>$this->client_secret
+        );
 
-            var_dump( Session::get('provider'));
-            return  Session::put('provider', $this->provider );
-
-        }
-
-        return;
+        Session::put('oauth', $data );
+        Session::save();
 
     }
-
 
     public function getSession()
     {
-        return Session::get('socialite_object');
+        return Session::get('oauth');
     }
 
+    public function injectCredentials($instance){
 
-
-    public function injectCredentials($instance, $provider){
-        $credential = $this->providerData($provider)->toArray();
         $instance = new $instance
         (
             Request::instance(),
-            $credential['client_id'],
-            $credential['client_secret'],
+            $this->client_id,
+            $this->client_secret,
             $this->callback_url
         );
 
@@ -143,7 +139,6 @@ class SocialLogin extends ComponentBase {
         return Auth::getUser();
     }
 
-
     public function providersList()
     {
         return Setting::lists('provider');
@@ -151,6 +146,13 @@ class SocialLogin extends ComponentBase {
 
     public function providerData($provider)
     {
-        return Setting::where('provider', $provider)->first();
+        $credential = Setting::where('provider', $provider)->first()->toArray();
+
+        if($credential){
+            $this->client_id = $credential['client_id'];
+            $this->client_secret = $credential['client_secret'];
+        }
+
+        return;
     }
 }

@@ -7,8 +7,7 @@
     "authors": [
         {
             "name": "Ferenc Fejer",
-            "email": "f.fejer@kakuki.de",
-            "role": "Co-founder"
+            "email": "f.fejer@kakuki.de"
         }
     ],
     "require": {
