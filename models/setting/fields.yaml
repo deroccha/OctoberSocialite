@@ -1,0 +1,22 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+  fields:
+
+      client_id:
+         label: ClientID
+         disabled: false
+         tab: Credentials
+
+      client_secret:
+         label: ClientSecret
+         disabled: false
+         tab: Credentials
+
+      help:
+         label: Help
+         disabled: false
+         tab: Help
+

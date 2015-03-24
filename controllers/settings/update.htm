@@ -1,0 +1,66 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('kakuki/oauth2/settings') ?>">Settings</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <?= Form::open(['class' => 'layout']) ?>
+
+<input type="hidden" name="Setting[provider]" value="<?= $this->providerAlias ?>" />
+
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item title-value">
+            <p class="oc-icon-<?= strtolower($this->providerAlias) ?>"><?= $this->provider ?></p>
+        </div>
+    </div>
+</div>
+
+        <div class="layout-row">
+            <?= $this->formRender() ?>
+        </div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    type="submit"
+                    data-request="onSave"
+                    data-request-data="redirect:0"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="Saving Setting..."
+                    class="btn btn-primary">
+                    <u>S</u>ave
+                </button>
+                <button
+                    type="button"
+                    data-request="onSave"
+                    data-request-data="close:1"
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="Saving Setting..."
+                    class="btn btn-default">
+                    Save and Close
+                </button>
+                <button
+                    type="button"
+                    class="oc-icon-trash-o btn-icon danger pull-right"
+                    data-request="onDelete"
+                    data-load-indicator="Deleting Setting..."
+                    data-request-confirm="Do you really want to delete this setting?">
+                </button>
+                <span class="btn-text">
+                    or <a href="<?= Backend::url('kakuki/oauth2/settings') ?>">Cancel</a>
+                </span>
+            </div>
+        </div>
+
+    <?= Form::close() ?>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('kakuki/oauth2/settings') ?>" class="btn btn-default">Return to settings list</a></p>
+
+<?php endif ?>

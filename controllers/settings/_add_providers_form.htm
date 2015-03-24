@@ -1,0 +1,42 @@
+<?= Form::open(['id' => 'addProvidersForm']) ?>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="popup">&times;</button>
+    <h4 class="modal-title"><?= e(trans('kakuki.oauth2::lang.add_provider_method')) ?></h4>
+</div>
+<div class="modal-body">
+
+    <?php if ($this->fatalError): ?>
+    <p class="flash-message static error"><?= $fatalError ?></p>
+
+    <?php else: ?>
+
+    <div class="list-preview">
+        <div class="control-simplelist is-selectable is-scrollable size-large" data-control="simplelist">
+            <ul>
+                <?php foreach ($providers as $provider): ?>
+
+                <li>
+                    <a href="<?= Backend::URL('kakuki/oauth2/settings/create/' . $provider) ?>">
+                        <h5 class="heading"><?= $provider ?></h5>
+                    </a>
+                </li>
+
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+
+    <?php endif ?>
+
+</div>
+
+<div class="modal-footer">
+    <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="popup">
+        <?= e(trans('backend::lang.form.cancel')) ?>
+    </button>
+</div>
+<?= Form::close() ?>
+

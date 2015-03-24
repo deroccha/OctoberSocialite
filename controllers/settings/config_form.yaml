@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Setting
+
+# Model Form Field configuration
+form: $/kakuki/oauth2/models/setting/fields.yaml
+
+# Model Class name
+modelClass: Kakuki\OAuth2\Models\Setting
+
+# Default redirect location
+defaultRedirect: kakuki/oauth2/settings
+
+# Create page
+create:
+    title: Create Setting
+    redirect: kakuki/oauth2/settings/update/:id
+    redirectClose: kakuki/oauth2/settings
+
+# Update page
+update:
+    title: Edit Setting
+    redirect: kakuki/oauth2/settings
+    redirectClose: kakuki/oauth2/settings
+
+# Preview page
+preview:
+    title: Preview Setting

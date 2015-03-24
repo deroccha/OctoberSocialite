@@ -1,0 +1,8 @@
+ul#socialize{
+	display: inline-block;
+}
+
+ul#socialize li{
+	list-style: none;
+}
+

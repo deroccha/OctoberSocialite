@@ -1,0 +1,56 @@
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li><a href="<?= Backend::url('kakuki/oauth2/providers') ?>">Provider Settings</a></li>
+    <li><?= e(trans($this->pageTitle)) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+<?= Form::open(['class'=>'layout-item stretch layout-column']) ?>
+
+<input type="hidden" name="Setting[provider]" value="<?= $this->providerAlias ?>" />
+
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item title-value">
+            <p class="oc-icon-<?= strtolower($this->providerAlias) ?>"><?= $this->providerAlias ?></p>
+        </div>
+    </div>
+</div>
+
+<?= $this->formRender() ?>
+
+<div class="form-buttons layout-item fix">
+    <div class="loading-indicator-container">
+        <button
+                type="submit"
+                data-request="onSave"
+                data-hotkey="ctrl+s, cmd+s"
+                data-load-indicator="Creating Provider..."
+                class="btn btn-primary">
+            Create
+        </button>
+        <button
+                type="button"
+                data-request="onSave"
+                data-request-data="close:1"
+                data-hotkey="ctrl+enter, cmd+enter"
+                data-load-indicator="Creating Provider..."
+                class="btn btn-default">
+            Create and Close
+        </button>
+                <span class="btn-text">
+                    or <a href="<?= Backend::url('kakuki/oauth2/settings') ?>">Cancel</a>
+                </span>
+    </div>
+</div>
+
+<?= Form::close() ?>
+
+<?php else: ?>
+
+<p class="flash-message static error"><?= e(trans($this->fatalError)) ?></p>
+<p><a href="<?= Backend::url('kakuki/oauth2/settings') ?>" class="btn btn-default">Return to types list</a></p>
+
+<?php endif ?>

@@ -1,0 +1,22 @@
+{
+    "name": "kakuki/oauth2",
+    "type": "OAuth2 Plugin for OctoberCMS",
+    "description": "Kakuki OAuth2",
+    "keywords": [""],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ferenc Fejer",
+            "email": "f.fejer@kakuki.de",
+            "role": "Co-founder"
+        }
+    ],
+    "require": {
+
+        "laravel/socialite": "2.0.*@dev",
+        "socialiteproviders/linkedin": "dev-master",
+        "socialiteproviders/xing": "dev-master" 
+    },
+
+    "minimum-stability": "dev"
+}
