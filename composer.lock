@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0476517847faf95c7b1ee64557edc80a",
+    "hash": "b323f9d4bc396c0d13d62a22916d3060",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -824,6 +824,118 @@
             "time": "2014-12-30 13:32:42"
         },
         {
+            "name": "socialiteproviders/linkedin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/LinkedIn.git",
+                "reference": "813cc60fc1fe23de667e9ad50d347d9358c924a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/LinkedIn/zipball/813cc60fc1fe23de667e9ad50d347d9358c924a9",
+                "reference": "813cc60fc1fe23de667e9ad50d347d9358c924a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "socialiteproviders/manager": "0.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\LinkedIn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DraperStudio",
+                    "email": "hello@draperstud.io"
+                }
+            ],
+            "description": "LinkedIn OAuth2 Provider for Laravel Socialite",
+            "time": "2015-03-07 10:59:41"
+        },
+        {
+            "name": "socialiteproviders/manager",
+            "version": "0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Manager.git",
+                "reference": "be96345692a3fc80244b90e613e70bd87dce7bc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Manager/zipball/be96345692a3fc80244b90e613e70bd87dce7bc9",
+                "reference": "be96345692a3fc80244b90e613e70bd87dce7bc9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "laravel/socialite": "~2.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Manager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Wendt",
+                    "email": "andy@awendt.com"
+                }
+            ],
+            "description": "An easy way to extend Laravel Socialite",
+            "time": "2015-02-19 16:09:34"
+        },
+        {
+            "name": "socialiteproviders/xing",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Xing.git",
+                "reference": "fa62b4c75dd0e1f5a71fec446885a96c22fbf176"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Xing/zipball/fa62b4c75dd0e1f5a71fec446885a96c22fbf176",
+                "reference": "fa62b4c75dd0e1f5a71fec446885a96c22fbf176",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "socialiteproviders/manager": "0.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Xing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DraperStudio",
+                    "email": "hello@draperstud.io"
+                }
+            ],
+            "description": "Xing OAuth1 Provider for Laravel Socialite",
+            "time": "2015-03-07 11:01:51"
+        },
+        {
             "name": "symfony/debug",
             "version": "dev-master",
             "target-dir": "Symfony/Component/Debug",
@@ -1130,7 +1242,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "laravel/socialite": 20
+        "laravel/socialite": 20,
+        "socialiteproviders/linkedin": 20,
+        "socialiteproviders/xing": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

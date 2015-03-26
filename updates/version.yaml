@@ -3,3 +3,7 @@
 1.0.2:
       - create Table Settings
       - create_settings_table.php
+1.0.3:
+      - create Table SocialiteUsers
+      - create_socialite_users_table.php
+1.0.4: Atered table

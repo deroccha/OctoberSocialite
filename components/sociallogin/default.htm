@@ -1,6 +1,17 @@
+{% flash %}
+<div class="alert alert-{{ type == 'error' ? 'danger' : type }}">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+</div>
+{% endflash %}
+
 <ul id="socialize">
     {% for provider in socialite_providers %}
-    <li><a href="{{ this.page.url }}/{{ provider |lower }}"><i class="fa fa-{{ provider |lower }}"></i> {{ provider }}</a>
+    <li>
+         <a href="{{ this.page.url }}/{{ provider |lower }}">
+            <i class="fa fa-{{ provider |lower }}"></i>
+            <span>{{ provider }}</span>
+         </a>
     </li>
     {% endfor %}
 </ul>

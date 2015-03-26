@@ -3,7 +3,8 @@
 use October\Rain\Database\Updates\Migration;
 use Schema;
 
-class CreateSettingsTable extends Migration {
+class CreateSettingsTable extends Migration
+{
 
 	public function up() {
 		Schema::create('kakuki_oauth2_settings', function ($table) {
@@ -12,6 +13,7 @@ class CreateSettingsTable extends Migration {
 			$table->string('provider');
 			$table->text('client_id');
 			$table->text('client_secret');
+            $table->boolean('status');
 			$table->timestamps();
 		});
 	}

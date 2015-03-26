@@ -5,7 +5,8 @@ use System\Classes\PluginManager;
 use Kakuki\OAuth2\Models\Setting;
 use October\Rain\Parse\Markdown;
 
-class ProviderManager {
+class ProviderManager
+{
 
     use \October\Rain\Support\Traits\Singleton;
 
@@ -41,7 +42,6 @@ class ProviderManager {
     public static function createPartials()
     {
         $partials = Partial::lists('baseFileName', 'baseFileName');
-
     }
 
     /**
@@ -76,12 +76,13 @@ class ProviderManager {
      * Return from Model all defined Providers
      */
 
-    public function registeredProviders(){
-
+    public function registeredProviders()
+    {
         return Setting::lists('provider');
     }
 
-    public static function readme(){
+    public static function readme()
+    {
 
         $readme_file = file_get_contents(plugins_path().'/kakuki/oauth2/README.md');
         $parser = new Markdown;

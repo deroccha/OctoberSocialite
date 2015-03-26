@@ -1,8 +1,18 @@
 ul#socialize{
 	display: inline-block;
+    width: 100%;
 }
 
 ul#socialize li{
 	list-style: none;
+    padding: 10px;
 }
+
+ul#socialize li a{
+    width: 100%;
+}
+ul#socialize li a span{
+    text-align: center;
+}
+
 

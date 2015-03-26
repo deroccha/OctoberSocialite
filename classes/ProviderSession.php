@@ -1,13 +1,22 @@
 <?php namespace Kakuki\OAuth2\Classes;
 
+use Laravel\Socialite\Facades\Socialite;
 use Session;
 
 
-class ProviderSession {
-
+class ProviderSession
+{
 
     use \October\Rain\Support\Traits\Singleton;
 
+
+    protected $provider;
+
+
+    public function __construct(Socialite $socialite, Request $request)
+    {
+
+    }
 
     public function setSession($obj)
     {
