@@ -4,6 +4,8 @@ This Plugin is under construction and is a Test Project. Can not be used in prod
 
 # Installation
 
+
+This Plugin has as dependency [RainLab User](https://github.com/rainlab/user-plugin) 
 1. create a sub folder kakuki under plugins directory.
 2. cd in folder kakuki and clone the project as oauth2 (Important because of namespace)
 
